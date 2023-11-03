@@ -129,21 +129,85 @@ void display_temp(int temp){
     }
     make_word(60, 175, nums, len);
 }
-void display_time(int time){
+
+void change_temp (int newTemp){
+
+	LCD_DrawFillRectangle(60,175,90,190,WHITE);
+
+	char* nums = toArray(newTemp);
+	int len;
+	if(newTemp < 100){
+	    len = 2;
+	}else {
+	    len = 3;
+	}
+	make_word(60, 175, nums, len);
+
+}
+
+void display_time(int minutes, int seconds){
     LCD_DrawChar(10,190, BLACK, BLACK, 'T', 16,1);
     LCD_DrawChar(20,190, BLACK, BLACK, 'I', 16,1);
     LCD_DrawChar(30,190, BLACK, BLACK, 'M', 16,1);
     LCD_DrawChar(40,190, BLACK, BLACK, 'E', 16,1);
     LCD_DrawChar(50,190, BLACK, BLACK, ':', 16,1);
 
-    char* nums = toArray(time);
-    int len;
-    if(time < 100){
-        len = 2;
-    }else {
-        len = 3;
+    char arrSeconds[2];
+    char arrMinutes[2];
+
+    char* secondArray = toArray(seconds);
+    char* minuteArray = toArray(minutes);
+
+    if(seconds < 10){
+    	arrSeconds[0] = '0';
+    	arrSeconds[1] = secondArray[0];
     }
-   make_word(60, 205, nums, len);
+    else{
+    	arrSeconds[0] = secondArray[0];
+    	arrSeconds[1] = secondArray[1];
+    }
+    if(minutes < 10){
+    	arrMinutes[0] = '0';
+    	arrMinutes[1] = minuteArray[0];
+    }else{
+    	arrMinutes[0] = minuteArray[0];
+    	arrMinutes[1] = minuteArray[1];
+    }
+
+   make_word(60, 205, arrMinutes, 2);
+   LCD_DrawChar(80,205, BLACK, BLACK, ':', 16,1);
+   make_word(90, 205, arrSeconds, 2);
+
+}
+
+void change_time(int minutes, int seconds){
+	char arrSeconds[2];
+	char arrMinutes[2];
+
+	LCD_DrawFillRectangle(60,205,120,220,WHITE);
+
+	char* secondArray = toArray(seconds);
+	char* minuteArray = toArray(minutes);
+
+	if(seconds < 10){
+	    arrSeconds[0] = '0';
+	    arrSeconds[1] = secondArray[0];
+	}else{
+		arrSeconds[0] = secondArray[0];
+	    arrSeconds[1] = secondArray[1];
+	}
+	if(minutes < 10){
+	    arrMinutes[0] = '0';
+	    arrMinutes[1] = minuteArray[0];
+	}else{
+	    arrMinutes[0] = minuteArray[0];
+	    arrMinutes[1] = minuteArray[1];
+	}
+
+	make_word(60, 205, arrMinutes, 2);
+	LCD_DrawChar(80,205, BLACK, BLACK, ':', 16,1);
+	make_word(90, 205, arrSeconds, 2);
+
 }
 
 void display_mode(int mode){
@@ -201,6 +265,128 @@ int main(void)
   MX_ADC_Init();
   /* USER CODE BEGIN 2 */
   HAL_UART_Receive_IT(&huart1, &rxData, 1);
+
+  LCD_Setup();
+      LCD_direction(0);
+      LCD_Clear(RED);
+      LCD_DrawRectangle(0,0,240,160,WHITE);
+
+      LCD_DrawChar(10,10, BLACK, BLACK, 'D', 16,1);
+          LCD_DrawChar(20,10, BLACK, BLACK, 'R', 16,1);
+          LCD_DrawChar(30,10, BLACK, BLACK, 'I', 16,1);
+          LCD_DrawChar(40,10, BLACK, BLACK, 'N', 16,1);
+          LCD_DrawChar(50,10, BLACK, BLACK, 'K', 16,1);
+          LCD_DrawChar(60,10, BLACK, BLACK, 'W', 16,1);
+          LCD_DrawChar(70,10, BLACK, BLACK, 'A', 16,1);
+          LCD_DrawChar(80,10, BLACK, BLACK, 'R', 16,1);
+          LCD_DrawChar(90,10, BLACK, BLACK, 'M', 16,1);
+          LCD_DrawChar(100,10, BLACK, BLACK, 'E', 16,1);
+          LCD_DrawChar(110,10, BLACK, BLACK, 'R', 16,1);
+          LCD_DrawChar(120,10, BLACK, BLACK, '+', 16,1);
+
+          LCD_DrawChar(10,40, BLACK, BLACK, 'H', 16,1);
+          LCD_DrawChar(20,40, BLACK, BLACK, 'e', 16,1);
+          LCD_DrawChar(30,40, BLACK, BLACK, 'r', 16,1);
+          LCD_DrawChar(40,40, BLACK, BLACK, 'e', 16,1);
+          LCD_DrawChar(50,40, BLACK, BLACK, ' ', 16,1);
+          LCD_DrawChar(60,40, BLACK, BLACK, 'a', 16,1);
+          LCD_DrawChar(70,40, BLACK, BLACK, 't', 16,1);
+          LCD_DrawChar(80,40, BLACK, BLACK, ' ', 16,1);
+          LCD_DrawChar(90,40, BLACK, BLACK, 'M', 16,1);
+          LCD_DrawChar(100,40, BLACK, BLACK, 'u', 16,1);
+          LCD_DrawChar(110,40, BLACK, BLACK, 'g', 16,1);
+          LCD_DrawChar(120,40, BLACK, BLACK, 'g', 16,1);
+          LCD_DrawChar(130,40, BLACK, BLACK, 'e', 16,1);
+          LCD_DrawChar(140,40, BLACK, BLACK, 'r', 16,1);
+          LCD_DrawChar(150,40, BLACK, BLACK, 's', 16,1);
+          LCD_DrawChar(160,40, BLACK, BLACK, ' ', 16,1);
+          LCD_DrawChar(170,40, BLACK, BLACK, 'w', 16,1);
+          LCD_DrawChar(180,40, BLACK, BLACK, 'e', 16,1);
+          LCD_DrawChar(190,40, BLACK, BLACK, ' ', 16,1);
+          LCD_DrawChar(200,40, BLACK, BLACK, 'a', 16,1);
+          LCD_DrawChar(210,40, BLACK, BLACK, 'r', 16,1);
+          LCD_DrawChar(220,40, BLACK, BLACK, 'e', 16,1);
+          LCD_DrawChar(230,40, BLACK, BLACK, ' ', 16,1);
+          LCD_DrawChar(10,55, BLACK, BLACK, 'c', 16,1);
+          LCD_DrawChar(20,55, BLACK, BLACK, 'o', 16,1);
+          LCD_DrawChar(30,55, BLACK, BLACK, 'm', 16,1);
+          LCD_DrawChar(40,55, BLACK, BLACK, 'm', 16,1);
+          LCD_DrawChar(50,55, BLACK, BLACK, 'i', 16,1);
+          LCD_DrawChar(60,55, BLACK, BLACK, 't', 16,1);
+          LCD_DrawChar(70,55, BLACK, BLACK, 't', 16,1);
+          LCD_DrawChar(80,55, BLACK, BLACK, 'e', 16,1);
+          LCD_DrawChar(90,55, BLACK, BLACK, 'd', 16,1);
+          LCD_DrawChar(100,55, BLACK, BLACK, ' ', 16,1);
+          LCD_DrawChar(110,55, BLACK, BLACK, 't', 16,1);
+          LCD_DrawChar(120,55, BLACK, BLACK, 'o', 16,1);
+          LCD_DrawChar(130,55, BLACK, BLACK, ' ', 16,1);
+          LCD_DrawChar(140,55, BLACK, BLACK, 'h', 16,1);
+          LCD_DrawChar(150,55, BLACK, BLACK, 'o', 16,1);
+          LCD_DrawChar(160,55, BLACK, BLACK, 't', 16,1);
+          LCD_DrawChar(170,55, BLACK, BLACK, ' ', 16,1);
+          LCD_DrawChar(180,55, BLACK, BLACK, 'd', 16,1);
+          LCD_DrawChar(190,55, BLACK, BLACK, 'r', 16,1);
+          LCD_DrawChar(200,55, BLACK, BLACK, 'i', 16,1);
+          LCD_DrawChar(210,55, BLACK, BLACK, 'n', 16,1);
+          LCD_DrawChar(220,55, BLACK, BLACK, 'k', 16,1);
+          LCD_DrawChar(230,55, BLACK, BLACK, 's', 16,1);
+
+          LCD_DrawChar(10,70, BLACK, BLACK, 'W', 16,1);
+          LCD_DrawChar(20,70, BLACK, BLACK, 'e', 16,1);
+          LCD_DrawChar(30,70, BLACK, BLACK, ' ', 16,1);
+          LCD_DrawChar(40,70, BLACK, BLACK, 'w', 16,1);
+          LCD_DrawChar(50,70, BLACK, BLACK, 'i', 16,1);
+          LCD_DrawChar(60,70, BLACK, BLACK, 'l', 16,1);
+          LCD_DrawChar(70,70, BLACK, BLACK, 'l', 16,1);
+          LCD_DrawChar(80,70, BLACK, BLACK, ' ', 16,1);
+          LCD_DrawChar(90,70, BLACK, BLACK, 'n', 16,1);
+          LCD_DrawChar(100,70, BLACK, BLACK, 'o', 16,1);
+          LCD_DrawChar(110,70, BLACK, BLACK, 't', 16,1);
+          LCD_DrawChar(120,70, BLACK, BLACK, ' ', 16,1);
+          LCD_DrawChar(130,70, BLACK, BLACK, 's', 16,1);
+          LCD_DrawChar(140,70, BLACK, BLACK, 'l', 16,1);
+          LCD_DrawChar(150,70, BLACK, BLACK, 'e', 16,1);
+          LCD_DrawChar(160,70, BLACK, BLACK, 'e', 16,1);
+          LCD_DrawChar(170,70, BLACK, BLACK, 'p', 16,1);
+          LCD_DrawChar(10,85, BLACK, BLACK, 'u', 16,1);
+          LCD_DrawChar(20,85, BLACK, BLACK, 'n', 16,1);
+          LCD_DrawChar(30,85, BLACK, BLACK, 't', 16,1);
+          LCD_DrawChar(40,85, BLACK, BLACK, 'i', 16,1);
+          LCD_DrawChar(50,85, BLACK, BLACK, 'l', 16,1);
+          LCD_DrawChar(60,85, BLACK, BLACK, ' ', 16,1);
+          LCD_DrawChar(70,85, BLACK, BLACK, 'y', 16,1);
+          LCD_DrawChar(80,85, BLACK, BLACK, 'o', 16,1);
+          LCD_DrawChar(90,85, BLACK, BLACK, 'u', 16,1);
+          LCD_DrawChar(100,85, BLACK, BLACK, 'r', 16,1);
+          LCD_DrawChar(110,85, BLACK, BLACK, ' ', 16,1);
+          LCD_DrawChar(120,85, BLACK, BLACK, 'd', 16,1);
+          LCD_DrawChar(130,85, BLACK, BLACK, 'r', 16,1);
+          LCD_DrawChar(140,85, BLACK, BLACK, 'i', 16,1);
+          LCD_DrawChar(150,85, BLACK, BLACK, 'n', 16,1);
+          LCD_DrawChar(160,85, BLACK, BLACK, 'k', 16,1);
+          LCD_DrawChar(170,85, BLACK, BLACK, ' ', 16,1);
+          LCD_DrawChar(180,85, BLACK, BLACK, 'i', 16,1);
+          LCD_DrawChar(190,85, BLACK, BLACK, 's', 16,1);
+          LCD_DrawChar(200,85, BLACK, BLACK, ' ', 16,1);
+          LCD_DrawChar(10,100, BLACK, BLACK, 'w', 16,1);
+          LCD_DrawChar(20,100, BLACK, BLACK, 'a', 16,1);
+          LCD_DrawChar(30,100, BLACK, BLACK, 'r', 16,1);
+          LCD_DrawChar(40,100, BLACK, BLACK, 'm', 16,1);
+          LCD_DrawChar(50,100, BLACK, BLACK, '-', 16,1);
+          LCD_DrawChar(60,100, BLACK, BLACK, 'i', 16,1);
+          LCD_DrawChar(70,100, BLACK, BLACK, 's', 16,1);
+          LCD_DrawChar(80,100, BLACK, BLACK, 'h', 16,1);
+
+
+          int temp = 50;
+
+          display_temp(temp);
+
+          int minutes = 12;
+          int seconds = 50;
+
+          display_time(minutes, seconds);
+          display_mode(1);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -216,125 +402,19 @@ int main(void)
 	      HAL_ADC_PollForConversion(&hadc, HAL_MAX_DELAY);
 	      raw = HAL_ADC_GetValue(&hadc);
 
+
+	      HAL_Delay(2000);
+	      change_temp(raw);
+	      seconds--;
+	      if(seconds == 0){
+	      	seconds = 60;
+	      	minutes--;
+	      }
+	      change_time(minutes,seconds);
+
     /* USER CODE BEGIN 3 */
   }
-  LCD_Setup();
-    LCD_direction(0);
-    LCD_Clear(RED);
-    LCD_DrawRectangle(0,0,240,160,WHITE);
 
-    LCD_DrawChar(10,10, BLACK, BLACK, 'D', 16,1);
-        LCD_DrawChar(20,10, BLACK, BLACK, 'R', 16,1);
-        LCD_DrawChar(30,10, BLACK, BLACK, 'I', 16,1);
-        LCD_DrawChar(40,10, BLACK, BLACK, 'N', 16,1);
-        LCD_DrawChar(50,10, BLACK, BLACK, 'K', 16,1);
-        LCD_DrawChar(60,10, BLACK, BLACK, 'W', 16,1);
-        LCD_DrawChar(70,10, BLACK, BLACK, 'A', 16,1);
-        LCD_DrawChar(80,10, BLACK, BLACK, 'R', 16,1);
-        LCD_DrawChar(90,10, BLACK, BLACK, 'M', 16,1);
-        LCD_DrawChar(100,10, BLACK, BLACK, 'E', 16,1);
-        LCD_DrawChar(110,10, BLACK, BLACK, 'R', 16,1);
-        LCD_DrawChar(120,10, BLACK, BLACK, '+', 16,1);
-
-        LCD_DrawChar(10,40, BLACK, BLACK, 'H', 16,1);
-        LCD_DrawChar(20,40, BLACK, BLACK, 'e', 16,1);
-        LCD_DrawChar(30,40, BLACK, BLACK, 'r', 16,1);
-        LCD_DrawChar(40,40, BLACK, BLACK, 'e', 16,1);
-        LCD_DrawChar(50,40, BLACK, BLACK, ' ', 16,1);
-        LCD_DrawChar(60,40, BLACK, BLACK, 'a', 16,1);
-        LCD_DrawChar(70,40, BLACK, BLACK, 't', 16,1);
-        LCD_DrawChar(80,40, BLACK, BLACK, ' ', 16,1);
-        LCD_DrawChar(90,40, BLACK, BLACK, 'M', 16,1);
-        LCD_DrawChar(100,40, BLACK, BLACK, 'u', 16,1);
-        LCD_DrawChar(110,40, BLACK, BLACK, 'g', 16,1);
-        LCD_DrawChar(120,40, BLACK, BLACK, 'g', 16,1);
-        LCD_DrawChar(130,40, BLACK, BLACK, 'e', 16,1);
-        LCD_DrawChar(140,40, BLACK, BLACK, 'r', 16,1);
-        LCD_DrawChar(150,40, BLACK, BLACK, 's', 16,1);
-        LCD_DrawChar(160,40, BLACK, BLACK, ' ', 16,1);
-        LCD_DrawChar(170,40, BLACK, BLACK, 'w', 16,1);
-        LCD_DrawChar(180,40, BLACK, BLACK, 'e', 16,1);
-        LCD_DrawChar(190,40, BLACK, BLACK, ' ', 16,1);
-        LCD_DrawChar(200,40, BLACK, BLACK, 'a', 16,1);
-        LCD_DrawChar(210,40, BLACK, BLACK, 'r', 16,1);
-        LCD_DrawChar(220,40, BLACK, BLACK, 'e', 16,1);
-        LCD_DrawChar(230,40, BLACK, BLACK, ' ', 16,1);
-        LCD_DrawChar(10,55, BLACK, BLACK, 'c', 16,1);
-        LCD_DrawChar(20,55, BLACK, BLACK, 'o', 16,1);
-        LCD_DrawChar(30,55, BLACK, BLACK, 'm', 16,1);
-        LCD_DrawChar(40,55, BLACK, BLACK, 'm', 16,1);
-        LCD_DrawChar(50,55, BLACK, BLACK, 'i', 16,1);
-        LCD_DrawChar(60,55, BLACK, BLACK, 't', 16,1);
-        LCD_DrawChar(70,55, BLACK, BLACK, 't', 16,1);
-        LCD_DrawChar(80,55, BLACK, BLACK, 'e', 16,1);
-        LCD_DrawChar(90,55, BLACK, BLACK, 'd', 16,1);
-        LCD_DrawChar(100,55, BLACK, BLACK, ' ', 16,1);
-        LCD_DrawChar(110,55, BLACK, BLACK, 't', 16,1);
-        LCD_DrawChar(120,55, BLACK, BLACK, 'o', 16,1);
-        LCD_DrawChar(130,55, BLACK, BLACK, ' ', 16,1);
-        LCD_DrawChar(140,55, BLACK, BLACK, 'h', 16,1);
-        LCD_DrawChar(150,55, BLACK, BLACK, 'o', 16,1);
-        LCD_DrawChar(160,55, BLACK, BLACK, 't', 16,1);
-        LCD_DrawChar(170,55, BLACK, BLACK, ' ', 16,1);
-        LCD_DrawChar(180,55, BLACK, BLACK, 'd', 16,1);
-        LCD_DrawChar(190,55, BLACK, BLACK, 'r', 16,1);
-        LCD_DrawChar(200,55, BLACK, BLACK, 'i', 16,1);
-        LCD_DrawChar(210,55, BLACK, BLACK, 'n', 16,1);
-        LCD_DrawChar(220,55, BLACK, BLACK, 'k', 16,1);
-        LCD_DrawChar(230,55, BLACK, BLACK, 's', 16,1);
-
-        LCD_DrawChar(10,70, BLACK, BLACK, 'W', 16,1);
-        LCD_DrawChar(20,70, BLACK, BLACK, 'e', 16,1);
-        LCD_DrawChar(30,70, BLACK, BLACK, ' ', 16,1);
-        LCD_DrawChar(40,70, BLACK, BLACK, 'w', 16,1);
-        LCD_DrawChar(50,70, BLACK, BLACK, 'i', 16,1);
-        LCD_DrawChar(60,70, BLACK, BLACK, 'l', 16,1);
-        LCD_DrawChar(70,70, BLACK, BLACK, 'l', 16,1);
-        LCD_DrawChar(80,70, BLACK, BLACK, ' ', 16,1);
-        LCD_DrawChar(90,70, BLACK, BLACK, 'n', 16,1);
-        LCD_DrawChar(100,70, BLACK, BLACK, 'o', 16,1);
-        LCD_DrawChar(110,70, BLACK, BLACK, 't', 16,1);
-        LCD_DrawChar(120,70, BLACK, BLACK, ' ', 16,1);
-        LCD_DrawChar(130,70, BLACK, BLACK, 's', 16,1);
-        LCD_DrawChar(140,70, BLACK, BLACK, 'l', 16,1);
-        LCD_DrawChar(150,70, BLACK, BLACK, 'e', 16,1);
-        LCD_DrawChar(160,70, BLACK, BLACK, 'e', 16,1);
-        LCD_DrawChar(170,70, BLACK, BLACK, 'p', 16,1);
-        LCD_DrawChar(10,85, BLACK, BLACK, 'u', 16,1);
-        LCD_DrawChar(20,85, BLACK, BLACK, 'n', 16,1);
-        LCD_DrawChar(30,85, BLACK, BLACK, 't', 16,1);
-        LCD_DrawChar(40,85, BLACK, BLACK, 'i', 16,1);
-        LCD_DrawChar(50,85, BLACK, BLACK, 'l', 16,1);
-        LCD_DrawChar(60,85, BLACK, BLACK, ' ', 16,1);
-        LCD_DrawChar(70,85, BLACK, BLACK, 'y', 16,1);
-        LCD_DrawChar(80,85, BLACK, BLACK, 'o', 16,1);
-        LCD_DrawChar(90,85, BLACK, BLACK, 'u', 16,1);
-        LCD_DrawChar(100,85, BLACK, BLACK, 'r', 16,1);
-        LCD_DrawChar(110,85, BLACK, BLACK, ' ', 16,1);
-        LCD_DrawChar(120,85, BLACK, BLACK, 'd', 16,1);
-        LCD_DrawChar(130,85, BLACK, BLACK, 'r', 16,1);
-        LCD_DrawChar(140,85, BLACK, BLACK, 'i', 16,1);
-        LCD_DrawChar(150,85, BLACK, BLACK, 'n', 16,1);
-        LCD_DrawChar(160,85, BLACK, BLACK, 'k', 16,1);
-        LCD_DrawChar(170,85, BLACK, BLACK, ' ', 16,1);
-        LCD_DrawChar(180,85, BLACK, BLACK, 'i', 16,1);
-        LCD_DrawChar(190,85, BLACK, BLACK, 's', 16,1);
-        LCD_DrawChar(200,85, BLACK, BLACK, ' ', 16,1);
-        LCD_DrawChar(10,100, BLACK, BLACK, 'w', 16,1);
-        LCD_DrawChar(20,100, BLACK, BLACK, 'a', 16,1);
-        LCD_DrawChar(30,100, BLACK, BLACK, 'r', 16,1);
-        LCD_DrawChar(40,100, BLACK, BLACK, 'm', 16,1);
-        LCD_DrawChar(50,100, BLACK, BLACK, '-', 16,1);
-        LCD_DrawChar(60,100, BLACK, BLACK, 'i', 16,1);
-        LCD_DrawChar(70,100, BLACK, BLACK, 's', 16,1);
-        LCD_DrawChar(80,100, BLACK, BLACK, 'h', 16,1);
-
-
-        display_temp(50);
-
-        display_time(12);
-
-        display_mode(1);
   /* USER CODE END 3 */
 }
 
